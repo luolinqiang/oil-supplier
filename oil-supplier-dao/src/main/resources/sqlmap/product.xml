@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.ProductDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `product`.`id`,
+		    `product`.`type`,
+		    `product`.`inventory`,
+		    `product`.`name`,
+		    `product`.`price`,
+		    `product`.`quality_standard` as qualityStandard,
+		    `product`.`product_model` as productModel,
+		    `product`.`product_addr` as productAddr,
+		    `product`.`density`,
+		    `product`.`flash_point` as flashPoint,
+		    `product`.`cetane_number` as cetaneNumber,
+            `product`.`cfpp`,
+            `product`.`color`,
+            `product`.`boiling_range` as boilingRange,
+            `product`.`details_type` as detailsType,
+            `product`.`details`,
+            `product`.`sulphur_content` as sulphurContent,
+            `product`.`create_time` as createTime,
+            `product`.`update_time` as updateTime,
+            `product`.`state`,
+            `product`.`remark`,
+            `product`.`supplier_id` as supplierId
+		FROM `product`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="product">
+        <include refid="selectAll"/>
+    </select>
+
+    <insert id="insert" parameterType="product" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        <![CDATA[
+            INSERT INTO `product`
+				(
+					`type`,
+					`inventory`,
+                    `name`,
+                    `price`,
+                    `quality_standard`,
+                    `product_model`,
+                    `product_addr`,
+                    `density`,
+                    `flash_point`,
+                    `cetane_number`,
+                    `cfpp`,
+                    `color`,
+                    `boiling_range`,
+                    `details_type`,
+                    `details`,
+                    `sulphur_content`,
+					`create_time`,
+					`update_time`,
+					`state`,
+					`remark`,
+				    `supplier_id`
+				)
+				VALUES
+				(
+					#{type},
+	                #{inventory},
+	                #{name},
+	                #{price},
+	                #{qualityStandard},
+                    #{productModel},
+                    #{productAddr},
+                    #{density},
+                    #{flashPoint},
+                    #{cetaneNumber},
+                    #{cfpp},
+                    #{color},
+                    #{boilingRange},
+                    #{detailsType},
+                    #{details},
+                    #{sulphurContent},
+	                now(),
+	                now(),
+	                #{state},
+	                #{remark},
+	                #{supplierId}
+				)
+                ]]>
+    </insert>
+
+    <update id="update" parameterType="product">
+        UPDATE   `product`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="inventory != null and inventory != ''">
+                inventory = #{inventory},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price},
+            </if>
+            <if test="qualityStandard != null and qualityStandard != ''">
+                quality_standard = #{qualityStandard},
+            </if>
+            <if test="productModel != null and productModel != ''">
+                product_model = #{productModel},
+            </if>
+            <if test="productAddr != null and productAddr != ''">
+                product_addr = #{productAddr},
+            </if>
+            <if test="density != null and density != ''">
+                density = #{density},
+            </if>
+            <if test="flashPoint != null and flashPoint != ''">
+                flash_point = #{flashPoint},
+            </if>
+            <if test="cetaneNumber != null and cetaneNumber != ''">
+                cetane_number = #{cetaneNumber},
+            </if>
+            <if test="cfpp != null and cfpp != ''">
+                cfpp = #{cfpp},
+            </if>
+            <if test="color != null and color != ''">
+                color = #{color},
+            </if>
+            <if test="boilingRange != null and boilingRange != ''">
+                boiling_range = #{boilingRange},
+            </if>
+            <if test="detailsType != null and detailsType != ''">
+                details_type = #{detailsType},
+            </if>
+            <if test="details != null and details != ''">
+                details = #{details},
+            </if>
+            <if test="sulphurContent != null and sulphurContent != ''">
+                sulphur_content = #{sulphurContent},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="supplierId != null and supplierId != ''">
+                supplier_id = #{supplierId},
+            </if>
+            update_time = now(),
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="product">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="product" resultType="product">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="supplierId != null and supplierId != ''">
+                and supplier_id = #{supplierId}
+            </if>
+            <if test="qualityStandard != null and qualityStandard != ''">
+                and quality_standard = #{qualityStandard}
+            </if>
+            <if test="productModel != null and productModel != ''">
+                and product_model = #{productModel}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+        </trim>
+    </select>
+</mapper>

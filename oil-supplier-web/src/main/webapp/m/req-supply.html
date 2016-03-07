@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <header class="ISPheader">
+        <div class="header wrap">
+            <div class="logo"><a href=""><img src=""></a></div>
+            <div class="user"><strong class="blue"></strong><span class="line">|</span><a href="">退出</a><span class="line">|</span><span class="org"></span></div>
+        </div>
+    </header>
+    <section class="wrap">
+        <div class="conBox">
+            <aside class="sidebar">
+                <h2></h2>
+                <ul class="usercenter">
+                    <li class="current"><i class="i32"></i><a href="javascript:;">我的申请</a></li>
+                    <li><i class="i12"></i><a href="/m/product-list.html">发布商品</a></li>
+                    <li><i class="i33"></i><a href="/m/index.html">我的订单</a></li>
+                    <!--<li><i class="i34"></i><a href=""></a></li>-->
+                    <!--<li><i class="i131"></i><a href=""></a></li>-->
+                </ul>
+            </aside>
+            <section class="content">
+                <div class="title">
+                    <h2>我的申请</h2>
+                </div>
+                <div class="checkDiv pt10" id="reqResult" style="display: none;">
+                    <p class="dataName" style="font-size: 16px;color:#00afff;"></p>
+                </div>
+                <form id="reqSupply" action="" method="post" style="display: none;">
+                <div class="checkDiv pt10">
+
+                    <input type="hidden" id="companyLogo"  name="companyLogo" />
+                    <input type="hidden" id="id"  name="id" />
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">公司名：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="companyName" name="companyName" value="" validate="^[\u4e00-\u9fa5a-zA-Z0-9]+$" maxlength="20" placeholder="公司名">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">联系人：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="contacts" name="contacts" value="" placeholder="联系人">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">联系电话：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="phone" name="phone" value="" placeholder="固话请填写区号">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">所在地：</dt>
+                        <dd class="itemCon shortCon">
+                            <div class="ui-flex">
+                                <div class="cell">
+                                    <!--<div class="sel-txt">请选择</div>-->
+                                    <select id="select_0" level=0 class="new-select">
+
+                                    </select>
+                                    <!--<span class="sp-icon"></span>-->
+                                </div>
+                                <div class="cell">
+                                    <!--<div class="sel-txt">请选择</div>-->
+                                    <select id="select_1" level=1 class="new-select">
+
+                                    </select>
+                                    <!--<span class="sp-icon"></span>-->
+                                </div>
+                                <div class="cell">
+                                    <!--<div class="sel-txt">请选择</div>-->
+                                    <select id="select_2" level=2 class="new-select">
+
+                                    </select>
+                                    <!--<span class="sp-icon"></span>-->
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">地址：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="address" name="address" value="">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">经营产品：</dt>
+                        <dd class="itemCon shortCon">
+                            <textarea id="operateProduct" name="operateProduct" style="width:435px;height:80px;padding:0 5px;border:1px solid #ddd;" placeholder="50字以内" maxlength="50"></textarea>
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">油库名称：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="oilName" name="oilName" value="">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">油库地址：</dt>
+                        <dd class="itemCon shortCon">
+                            <input type="text" class="inputMode" id="oilAddress" name="oilAddress" value="">
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">企业类型：</dt>
+                        <dd class="itemCon shortCon">
+                            <select class="inputMode" name="companyType" id="companyType">
+                                <option selected="selected" value="27">上游厂家</option>
+                                <option value="28">贸易商</option>
+                                <option value="29">终端</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">企业简介：</dt>
+                        <dd class="itemCon shortCon">
+                            <textarea id="companyDesc" name="companyDesc" style="width:435px;height:80px;padding:0 5px;border:1px solid #ddd;" placeholder="200字以内" maxlength="200"></textarea>
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="itemTitle shortTitle">LOGO：</dt>
+                        <dd class="itemCon shortCon">
+                            <img src="images/picHold.png" width="96" height="96" id="logoPic">
+                            <input type="file" name="logoUrl" class="file" id="logoUrl" multiple/>
+                            <span class="tips mt20">建议图片大小：<br>
+                        200*200px<br>
+                        仅支持jpg和png格式 小于1M</span></dd>
+                    </dl>
+                    <div class="btnDiv">
+                        <span style="color: #ff0000" id="returnInfo"></span>
+                        <div class="shortCon tleft"><a href="javascript:;" class="blueBtn">保存</a></div>
+                    </div>
+                </div>
+                </form>
+            </section>
+        </div>
+    </section>
+
+    <script id="option_tpl" type="text/html">
+        <%for(var i = 0; i < data.length; i++){%>
+        <option  value="<%:=data[i].id%>"><%:= data[i].areaName%></option>
+        <%}%>
+    </script>
+
+    <script id="form_tpl" type="text/html">
+
+    </script>
+
+</body>
+<script type="text/javascript" src="js/common/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/common/template.js"></script>
+<script type="text/javascript" src="js/common/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        async : false,
+        cache : false,
+        type : 'GET',
+        url : "/u/status",
+        error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+//            alert(errorThrown);
+        },
+        success : function(data) {
+            if (0 == data.code) {
+                if (0 == data.data) {
+                    $("#reqSupply").show();
+                    initAreaInfo(0, -1);
+                } else {
+                    $("#reqResult").show();
+                   if (2 == data.data)
+                       $(".dataName").html("正在审核中....");
+                   else {
+//                       $("#reqSupply").show();
+//                       fillSupplyInfo(data.data);
+                       $(".dataName").html("供应商审核通过。");
+                   }
+                }
+            } else if (1011 == data.code){
+                window.location.href= "/m/login.html?redirectUrl=/m/req-supply.html";
+            }
+        }
+    });
+
+    function fillSupplyInfo(supplier) {
+        $("#id").val(supplier.id);
+        $("#companyName").val(supplier.companyName);
+        $("#contacts").val(supplier.contacts);
+        $("#phone").val(supplier.phone);
+        $("#address").val(supplier.address);
+        $("#operateProduct").val(supplier.operateProduct);
+        $("#oilName").val(supplier.oilName);
+        $("#oilAddress").val(supplier.oilAddress);
+        $("#companyDesc").val(supplier.companyDesc);
+    }
+
+    function initAreaInfo(level, areaId) {
+        $.ajax({
+            async : false,
+            cache : false,
+            type  : 'GET',
+            url : "/common/getAreas",
+            data : {pid : areaId},
+            error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+            },
+            success : function(data) {
+//                alert(JSON.stringify(data));
+                if (0 == data.code) {
+                    var html = template($("#option_tpl").html(),data);
+                    $("#select_"+level).html("");
+                    $("#select_"+level).append(html);
+                    for(var i=0;i<=2;i++)
+                        $("#select_"+i).attr('name','');
+                    if (level<2 && data.data.length>0) {
+                        var firstObject = data.data[0];
+                        initAreaInfo(level+1, firstObject.id);
+                    } else {
+                        if (level-1>=0) {
+                            $("#select_"+(level-1)).attr('name', 'areaId');
+                        }
+                        for(var i=level;i<=2;i++)
+                            $("#select_"+i).hide();
+                    }
+                }
+            }
+        });
+    }
+
+    $('#logoUrl').change(function(){
+        $.ajaxFileUpload({
+            type:'POST',
+            url:'/common/uploadImg',
+            fileElementId:'logoUrl',
+            dataType:'json',
+            secureuri:false,//一般设置为false
+            success:function(data){
+//                    alert(JSON.stringify(data));
+                if(0 == data.code && null != data.data) {
+                   $("#logoPic").attr("src", data.data);
+                   $("#companyLogo").val(data.data);
+                } else if (1011 == data.code){
+                    window.location.href= "/m/login.html?redirectUrl=/m/req-supply.html";
+                } else {
+                    alert("上传失败");
+                }
+            },
+            error:function(data){
+                alert(JSON.stringify(data));
+            }
+        });
+    });
+
+    $(".new-select").change(function(){
+        var level = parseInt($(this).attr("level"));
+        for(var i=level+1;i<=2;i++)
+            $("#select_"+i).show();
+        var selectValue = $(this).find("option:selected").val();
+        initAreaInfo(level+1, selectValue);
+    });
+
+    $(".blueBtn").click(function(){
+        $.ajax({
+            type:'POST',
+            url:'/u/applySupplier',
+            data:$("#reqSupply").serialize(),
+            dataType:'json',
+            success:function(data){
+                if(0 == data.code){
+                     window.location.reload();
+                } else if (1011 == data.code){
+                    window.location.href= "/m/login.html?redirectUrl=/m/req-supply.html";
+                } else{
+                    alert("出错了，请稍候再试！");
+                }
+            },
+            error:function(data){
+                alert("出错了，请稍候再试！");
+            }
+        });
+    });
+
+</script>
+</html>

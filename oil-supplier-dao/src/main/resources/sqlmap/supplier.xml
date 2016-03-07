@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.SupplierDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `supplier`.`id`,
+            `supplier`.`type`,
+            `supplier`.`company_name` as companyName,
+            `supplier`.`company_logo` as companyLogo,
+            `supplier`.`contacts`,
+            `supplier`.`phone`,
+            `supplier`.`area_id` as areaId,
+            `supplier`.`address`,
+            `supplier`.`operate_product` as operateProduct,
+            `supplier`.`oil_name` as oilName,
+            `supplier`.`oil_address` as oilAddress,
+            `supplier`.`company_type` as companyType,
+            `supplier`.`company_desc` as companyDesc,
+            `supplier`.`create_time` as createTime,
+            `supplier`.`update_time` as updateTime,
+            `supplier`.`state`,
+            `supplier`.`remark`
+		FROM `supplier`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="supplier">
+        <include refid="selectAll"/>
+    </select>
+
+    <insert id="insert" parameterType="supplier" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        <![CDATA[
+            INSERT INTO `supplier`
+				(
+                    `type`,
+                    `company_name`,
+                    `company_logo`,
+                    `contacts`,
+                    `phone`,
+                    `area_id`,
+                    `address`,
+                    `operate_product`,
+                    `oil_name`,
+                    `oil_address`,
+                    `company_type`,
+                    `company_desc`,
+                    `create_time`,
+                    `update_time`,
+                    `state`,
+                    `remark`
+				)
+				VALUES
+				(
+					#{type},
+					#{companyName},
+					#{companyLogo},
+					#{contacts},
+					#{phone},
+					#{areaId},
+					#{address},
+					#{operateProduct},
+					#{oilName},
+					#{oilAddress},
+					#{companyType},
+					#{companyDesc},
+	                now(),
+	                now(),
+	                #{state},
+	                #{remark}
+				)
+                ]]>
+    </insert>
+
+    <update id="update" parameterType="supplier">
+        UPDATE   `supplier`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName},
+            </if>
+            <if test="companyLogo != null and companyLogo != ''">
+                company_logo = #{companyLogo},
+            </if>
+            <if test="contacts != null and contacts != ''">
+                contacts = #{contacts},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="operateProduct != null">
+                operate_product = #{operateProduct},
+            </if>
+            <if test="oilName != null">
+                oil_name = #{oilName},
+            </if>
+            <if test="oilAddress != null">
+                oil_address = #{oilAddress},
+            </if>
+            <if test="companyType != null">
+                company_type = #{companyType},
+            </if>
+            <if test="companyDesc != null">
+                company_desc = #{companyDesc},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            update_time = now(),
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="supplier">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="supplier" resultType="supplier">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="area_id != null and area_id != ''">
+                and area_id = #{area_id}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+        </trim>
+    </select>
+</mapper>

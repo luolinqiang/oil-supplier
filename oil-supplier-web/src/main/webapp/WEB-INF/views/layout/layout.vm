@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+    #parse("/layout/header.vm")
+
+
+
+<body>
+<!-- header -->
+
+<!-- header end -->
+    $screen_content
+<!-- footer begin -->
+
+<!-- footer end -->
+</body>
+</html>
+
+ 

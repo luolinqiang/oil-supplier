@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.UserDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `user`.`id`,
+		    `user`.`user_id` as userId,
+		    `user`.`user_type` as userType,
+		    `user`.`nickname`,
+		    `user`.`real_name` as realName,
+		    `user`.`company_name` as companyName,
+		    `user`.`phone`,
+		    `user`.`email`,
+		    `user`.`password`,
+		    `user`.`head_portrait` as headPortrait,
+		    `user`.`sex`,
+		    `user`.`device`,
+		    `user`.`create_time` as createTime,
+		    `user`.`longitude`,
+		    `user`.`latitude`,
+		    `user`.`state`,
+		    `user`.`remark`,
+		    `user`.`supplier_id` as supplierId
+		FROM `user`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="user">
+        <include refid="selectAll"/>
+    </select>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+        <if test="userId!= null">user_id = #{userId,jdbcType=VARCHAR},</if>
+        <if test="userType!= null">user_type = #{userType,jdbcType=TINYINT},</if>
+        <if test="nickname!= null">nickname = #{nickname,jdbcType=VARCHAR},</if>
+        <if test="realName!= null">real_name = #{realName,jdbcType=VARCHAR},</if>
+        <if test="companyName!= null">company_name = #{companyName,jdbcType=VARCHAR},</if>
+        <if test="phone!= null">phone = #{phone,jdbcType=VARCHAR},</if>
+        <if test="email!= null">email = #{email,jdbcType=VARCHAR},</if>
+        <if test="password!= null">password = #{password,jdbcType=VARCHAR},</if>
+        <if test="headPortrait!= null">head_portrait = #{headPortrait,jdbcType=VARCHAR},</if>
+        <if test="sex!= null">sex = #{sex,jdbcType=TINYINT},</if>
+        <if test="device!= null">device = #{device,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="longitude!= null">longitude = #{longitude,jdbcType=VARCHAR},</if>
+        <if test="latitude!= null">latitude = #{latitude,jdbcType=VARCHAR},</if>
+        <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+        <if test="supplierId!= null">supplier_id = #{supplierId,jdbcType=BIGINT},</if>
+    </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+        <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        <if test="userId != null">AND user_id = #{userId, jdbcType=VARCHAR}</if>
+        <if test="userType != null">AND user_type = #{userType, jdbcType=TINYINT}</if>
+        <if test="nickname != null">AND nickname = #{nickname, jdbcType=VARCHAR}</if>
+        <if test="realName != null">AND real_name = #{realName, jdbcType=VARCHAR}</if>
+        <if test="companyName != null">AND company_name = #{companyName, jdbcType=VARCHAR}</if>
+        <if test="phone != null">AND phone = #{phone, jdbcType=VARCHAR}</if>
+        <if test="email != null">AND email = #{email, jdbcType=VARCHAR}</if>
+        <if test="password != null">AND password = #{password, jdbcType=VARCHAR}</if>
+        <if test="headPortrait != null">AND head_portrait = #{headPortrait, jdbcType=VARCHAR}</if>
+        <if test="sex != null">AND sex = #{sex, jdbcType=TINYINT}</if>
+        <if test="device != null">AND device = #{device, jdbcType=VARCHAR}</if>
+        <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+        <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+        <if test="longitude != null">AND longitude = #{longitude, jdbcType=VARCHAR}</if>
+        <if test="latitude != null">AND latitude = #{latitude, jdbcType=VARCHAR}</if>
+        <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+        <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+        <if test="supplierId != null">AND supplier_id = #{supplierId, jdbcType=BIGINT}</if>
+    </sql>
+
+    <insert id="insert" parameterType="user" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        <![CDATA[
+            INSERT INTO `user`
+				(
+					`user_id`,
+					`user_type`,
+					`nickname`,
+					`real_name`,
+					`company_name`,
+					`phone`,
+					`email`,
+					`password`,
+					`head_portrait`,
+					`sex`,
+					`device`,
+					`create_time`,
+					`update_time`,
+					`longitude`,
+					`latitude`,
+					`state`,
+					`remark`,
+					`supplier_id`
+				)
+				VALUES
+				(
+					#{userId},
+	                #{userType},
+	                #{nickname},
+	                #{realName},
+	                #{companyName},
+	                #{phone},
+	                #{email},
+	                #{password},
+	                #{headPortrait},
+	                #{sex},
+	                #{device},
+	                now(),
+	                now(),
+	                #{longitude},
+	                #{latitude},
+                    #{state},
+                    #{remark},
+                    #{supplierId}
+				)
+                ]]>
+    </insert>
+
+    <update id="update" parameterType="user">
+        UPDATE   `user`
+        <trim prefix="SET" suffixOverrides=",">
+            <include refid="Dynamic_SetValue"/>
+            update_time = now()
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null and id != 0">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="user">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getByUserId" parameterType="String" resultType="user">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and user_id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="user" resultType="user">
+      <include refid="selectAll"/>
+      <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+          <include refid="Dynamic_Where"/>
+      </trim>
+    </select>
+
+</mapper>

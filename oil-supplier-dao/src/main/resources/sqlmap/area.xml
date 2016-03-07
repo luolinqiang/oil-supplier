@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.AreaDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `area`.`id`,
+		    `area`.`pid`,
+		    `area`.`area_level` as areaLevel,
+		    `area`.`area_code` as areaCode,
+		    `area`.`area_name` as areaName,
+		    `area`.`area_sort` as areaSort,
+		    `area`.`longitude`,
+		    `area`.`latitude`,
+		    `area`.`create_time` as createTime,
+		    `area`.`update_time` as updateTime,
+		    `area`.`state`,
+		    `area`.`remark`
+		FROM `area`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="area">
+        <include refid="selectAll"/>
+    </select>
+
+    <update id="update" parameterType="area">
+        UPDATE   `area`
+        <trim prefix="SET" suffixOverrides=",">
+            update_time = now()
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="area">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="area" resultType="area">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+            <if test="pid != null and pid != ''">
+                and pid = #{pid}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+        </trim>
+    </select>
+</mapper>

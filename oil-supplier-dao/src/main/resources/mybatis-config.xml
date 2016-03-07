@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties>
+        <property name="dialect" value="mysql"/>
+    </properties>
+
+    <settings>
+        <!-- changes from the defaults -->
+        <setting name="lazyLoadingEnabled" value="false"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="com.oil.supplier.domain.User" alias="user"/>
+        <typeAlias type="com.oil.supplier.domain.Supplier" alias="supplier"/>
+        <typeAlias type="com.oil.supplier.domain.Product" alias="product"/>
+        <typeAlias type="com.oil.supplier.domain.Pic" alias="pic"/>
+        <typeAlias type="com.oil.supplier.domain.Area" alias="area"/>
+        <typeAlias type="com.oil.supplier.domain.Dictionary" alias="dictionary"/>
+        <typeAlias type="com.oil.supplier.domain.Order" alias="order"/>
+    </typeAliases>
+
+</configuration>

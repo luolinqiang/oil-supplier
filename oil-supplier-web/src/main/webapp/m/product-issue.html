@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <header class="ISPheader">
+        <div class="header wrap">
+            <div class="logo"><a href=""><img src=""></a></div>
+            <div class="user"><strong class="blue"></strong><span class="line">|</span><a href="">退出</a><span class="line">|</span><span class="org"></span></div>
+        </div>
+    </header>
+    <section class="wrap">
+        <div class="conBox">
+            <aside class="sidebar">
+                <h2></h2>
+                <ul class="usercenter">
+                    <li><i class="i32"></i><a href="/m/req-supply.html">我的申请</a></li>
+                    <li class="current"><i class="i12"></i><a href="/m/product-list.html">发布商品</a></li>
+                    <li><i class="i33"></i><a href="/m/index.html">我的订单</a></li>
+                    <!--<li><i class="i34"></i><a href=""></a></li>-->
+                    <!--<li><i class="i131"></i><a href=""></a></li>-->
+                </ul>
+            </aside>
+            <section class="content">
+                <div class="title">
+                    <h2>发布商品</h2>
+                </div>
+                <div class="checkDiv pt10">
+                    <form id="addProduct" action="" method="post">
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">名称：</dt>
+                            <dd class="itemCon shortCon">
+                                <input type="text" class="inputMode" id="name" name="name" value="" validate="^[\u4e00-\u9fa5a-zA-Z0-9]+$" maxlength="20" placeholder="名称">
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">汽油/柴油：</dt>
+                            <dd class="itemCon shortCon">
+                                <select class="inputMode" name="type" id="type">
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">库存量：</dt>
+                            <dd class="itemCon shortCon">
+                                <input type="text" class="inputMode" id="inventory" name="inventory" value="" maxlength="20" placeholder="库存量">
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">单价：</dt>
+                            <dd class="itemCon shortCon">
+                                <input type="text" class="inputMode" id="price" name="price" value="" maxlength="20" placeholder="价格">
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">质量标准：</dt>
+                            <dd class="itemCon shortCon">
+                                <select class="inputMode" name="qualityStandard" id="qualityStandard">
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">产品型号：</dt>
+                            <dd class="itemCon shortCon">
+                                <select class="inputMode" name="productModel" id="productModel">
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl class="item">
+                            <dt class="itemTitle shortTitle">提油地点：</dt>
+                            <dd class="itemCon shortCon">
+                                <div class="ui-flex">
+                                    <div class="cell">
+                                        <!--<div class="sel-txt">请选择</div>-->
+                                        <select id="select_0" level=0 class="new-select">
+
+                                        </select>
+                                        <!--<span class="sp-icon"></span>-->
+                                    </div>
+                                    <div class="cell">
+                                        <!--<div class="sel-txt">请选择</div>-->
+                                        <select id="select_1" level=1 class="new-select">
+
+                                        </select>
+                                        <!--<span class="sp-icon"></span>-->
+                                    </div>
+                                    <div class="cell">
+                                        <!--<div class="sel-txt">请选择</div>-->
+                                        <select id="select_2" level=2 class="new-select">
+
+                                        </select>
+                                        <!--<span class="sp-icon"></span>-->
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <div id="param">
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">密度：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="density" name="density" value="" maxlength="20" placeholder="密度(20℃,g/cm³)(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">闪点：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="flashPoint" name="flashPoint" value="" maxlength="20" placeholder="闪点(闭口,℃)(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">十六烷指数：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="cetaneNumber" name="cetaneNumber" value="" maxlength="20" placeholder="十六烷指数(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">硫含量：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="sulphurContent" name="sulphurContent" value="" maxlength="20" placeholder="硫含量(ppm)(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">色度：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="color" name="color" value="" maxlength="20" placeholder="色度(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">冷滤点：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="cfpp" name="cfpp" value="" maxlength="20" placeholder="冷滤点(选填)">
+                                </dd>
+                            </dl>
+                            <dl class="item">
+                                <dt class="itemTitle shortTitle">馏程：</dt>
+                                <dd class="itemCon shortCon">
+                                    <input type="text" class="inputMode" id="boilingRange" name="boilingRange" value="" maxlength="20" placeholder="馏程(选填)">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="btnDiv">
+                            <div class="shortCon tleft"><a href="javascript:;" class="blueBtn">保存</a></div>
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <script id="option_tpl" type="text/html">
+        <%for(var i = 0; i < data.length; i++){%>
+        <option  value="<%:=data[i].id%>"><%:= data[i].areaName%></option>
+        <%}%>
+    </script>
+</body>
+<script type="text/javascript" src="js/common/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/common/template.js"></script>
+<script type="text/javascript" src="js/common/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    requestDic($('#type'), 'item_class', function(){
+        typeChange();
+    });
+
+    initAreaInfo(0, -1);
+
+    $('#type').change(function(){
+        typeChange();
+    });
+
+    function typeChange() {
+        $("#qualityStandard").html('');
+        $("#productModel").html('');
+        var tag = $('#type option:selected').attr('tag');
+        var code = 'item_standard'  + '_' + tag;
+        requestDic($("#qualityStandard"), code);
+        code = 'item_model'  + '_' + tag;
+        requestDic($("#productModel"), code);
+        if (tag == 'petrol') {
+            $("#param").hide();
+        } else {
+            $("#param").show();
+        }
+    }
+
+    function requestDic(container, code, fn) {
+        $.ajax({
+            async : false,
+            cache : false,
+            type : 'GET',
+            url : "/common/getDics",
+            data : {groupCode : code},
+            error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+//            alert(errorThrown);
+            },
+            success : function(data) {
+//                alert(JSON.stringify(data));
+                if (0 == data.code) {
+                    fillDic(container, data.data);
+                    if (fn) fn();
+                }
+            }
+        });
+    }
+
+    function fillDic(container, data) {
+        var html = '';
+        for(var i = 0;i < data.length;i++){
+            html += '<option value="'+data[i].id+'" tag="'+data[i].code+'">'+data[i].name+'</option>';
+        }
+        container.append(html);
+    }
+
+    function initAreaInfo(level, areaId) {
+        $.ajax({
+            async : false,
+            cache : false,
+            type  : 'GET',
+            url : "/common/getAreas",
+            data : {pid : areaId},
+            error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+            },
+            success : function(data) {
+//                alert(JSON.stringify(data));
+                if (0 == data.code) {
+                    var html = template($("#option_tpl").html(),data);
+                    $("#select_"+level).html("");
+                    $("#select_"+level).append(html);
+                    for(var i=0;i<=2;i++)
+                        $("#select_"+i).attr('name','');
+                    if (level<2 && data.data.length>0) {
+                        var firstObject = data.data[0];
+                        initAreaInfo(level+1, firstObject.id);
+                    } else {
+                        if (level-1>=0) {
+                            $("#select_"+(level-1)).attr('name', 'productAddr');
+                        }
+                        for(var i=level;i<=2;i++)
+                            $("#select_"+i).hide();
+                    }
+                }
+            }
+        });
+    }
+
+    $(".new-select").change(function(){
+        var level = parseInt($(this).attr("level"));
+        for(var i=level+1;i<=2;i++)
+            $("#select_"+i).show();
+        var selectValue = $(this).find("option:selected").val();
+        initAreaInfo(level+1, selectValue);
+    });
+
+    $(".blueBtn").click(function(){
+        var itemName = $('#name').val();
+        if(itemName == null || itemName == ''){
+            alert('请填写商品名称！');
+            return;
+        }
+        var inventory = $('#inventory').val();
+        if(inventory == null || inventory == ''){
+            alert('请填写库存数量！');
+            return;
+        }
+        var price = $('#price').val();
+        if(price == null || price == ''){
+            alert('请填写价格！');
+            return;
+        }
+        $.ajax({
+            type:'POST',
+            url:'/pro/add',
+            data:$("#addProduct").serialize(),
+            dataType:'json',
+            success:function(data){
+//                alert(JSON.stringify(data));
+                if(0 == data.code) {
+                    window.location.href= "/m/product-list.html";
+                } else if (1011 == data.code) {
+                    window.location.href= "/m/login.html?redirectUrl=/m/product-issue.html";
+                } else {
+                    alert("出错了，请稍候再试！");
+                }
+            },
+            error:function(data){
+                alert("出错了，请稍候再试！");
+            }
+        });
+    });
+</script>
+</html>

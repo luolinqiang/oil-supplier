@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.OrderDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `order`.`id`,
+            `order`.`user_id` as userId,
+            `order`.`product_id` as productId,
+            `order`.`supplier_id` as supplierId,
+            `order`.`order_type` as orderType,
+            `order`.`price`,
+            `order`.`number`,
+            `order`.`total_price` as totalPrice,
+            `order`.`pay_type` as `payType`,
+            `order`.`delivery_type` as `deliveryType`,
+            `order`.`car_number` as `carNumber`,
+            `order`.`receiver_name` as `receiverName`,
+            `order`.`receiver_phone` as `receiverPhone`,
+            `order`.`receiver_addr` as `receiverAddr`,
+            `order`.`other_require` as `otherRequire`,
+            `order`.`create_time` as `createTime`,
+            `order`.`update_time` as `updateTime`,
+            `order`.`arrival_time` as `arrivalTime`,
+            `order`.`remark`,
+            `order`.`state`
+		FROM `order`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="order">
+        <include refid="selectAll"/>
+    </select>
+
+    <insert id="insert" parameterType="order" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        <![CDATA[
+            INSERT INTO `product`
+				(
+					`user_id`,
+					`product_id`,
+                    `supplier_id`,
+                    `order_type`,
+                    `price`,
+                    `number`,
+                    `total_price`,
+                    `pay_type`,
+                    `delivery_type`,
+                    `car_number`,
+                    `receiver_name`,
+                    `receiver_phone`,
+                    `receiver_addr`,
+                    `other_require`,
+					`create_time`,
+					`update_time`,
+					`arrival_time`,
+					`remark`,
+					`state`
+				)
+				VALUES
+				(
+					#{userId},
+                    #{productId},
+                    #{supplierId},
+                    #{orderType},
+                    #{price},
+                    #{number},
+                    #{totalPrice},
+                    #{payType},
+                    #{deliveryType},
+                    #{carNumber},
+                    #{receiverName},
+                    #{receiverPhone},
+                    #{receiverAddr},
+                    #{otherRequire},
+	                now(),
+	                now(),
+	                #{arrivalTime},
+	                #{remark},
+	                #{state}
+				)
+                ]]>
+    </insert>
+
+    <update id="update" parameterType="order">
+        UPDATE   `order`
+        <trim prefix="SET" suffixOverrides=",">
+
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+
+            update_time = now(),
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="order">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="order" resultType="order">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="supplierId != null and supplierId != ''">
+                and supplier_id = #{supplierId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and order_type = #{orderType}
+            </if>
+
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+        </trim>
+    </select>
+</mapper>

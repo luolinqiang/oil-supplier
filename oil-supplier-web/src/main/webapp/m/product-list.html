@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <header class="ISPheader">
+        <div class="header wrap">
+            <div class="logo"><a href=""><img src=""></a></div>
+            <div class="user"><strong class="blue"></strong><span class="line">|</span><a href="">退出</a><span class="line">|</span><span class="org"></span></div>
+        </div>
+    </header>
+    <section class="wrap">
+        <div class="conBox">
+            <aside class="sidebar">
+                <h2></h2>
+                <ul class="usercenter">
+                    <li><i class="i32"></i><a href="/m/req-supply.html">我的申请</a></li>
+                    <li class="current"><i class="i12"></i><a href="javascript:;">发布商品</a></li>
+                    <li><i class="i33"></i><a href="/m/index.html">我的订单</a></li>
+                    <!--<li><i class="i34"></i><a href=""></a></li>-->
+                    <!--<li><i class="i131"></i><a href=""></a></li>-->
+                </ul>
+            </aside>
+            <section class="content">
+                <div class="title">
+                    <span class="fr"><a href="/m/product-issue.html" class="newBtn"><i class="i107"></i>添加商品</a></span>
+                    <h2>商品列表</h2>
+                </div>
+                <div class="checkDiv pt10">
+
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+    <script id="product_tpl" type="text/html">
+        <%for(var i = 0; i < data.length; i++){%>
+        <!--<p class="dataName"><span class="date"></span></p>-->
+        <div class="dataCon">
+            <table class="orderTable">
+                <colgroup>
+                    <col width="380">
+                    <col width="160">
+                    <col width="160">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td style="border-left: 0">
+                        <!--<img src="" width="70" height="70">-->
+                        <p class="text"><%:=data[i].name%><br><span class="f12 gray">发布时间：<%:=data[i].createTime%></span></p>
+                    </td>
+                    <td><p class="pl15">×<%:=data[i].inventory%></td>
+                    <td class="tcenter"><strong class="f16 blue">￥<%:=data[i].price%></strong></td>
+                    <td class="tcenter">
+                        <strong class="f16 green">
+                            <%if(data[i].state==1){%>
+                            暂存
+                            <%} else if(data[i].state==2) {%>
+                            正常
+                            <%}%>
+                        </strong>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <%}%>
+    </script>
+</body>
+<script type="text/javascript" src="js/common/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/common/template.js"></script>
+<script type="text/javascript" src="js/common/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        async : false,
+        cache : false,
+        type : 'GET',
+        url : "/pro/getIssue",
+        error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+//            alert(errorThrown);
+        },
+        success : function(data) {
+//            alert(JSON.stringify(data));
+            if (0 == data.code) {
+                var html = template($("#product_tpl").html(),data);
+                $(".checkDiv").html(html);
+            } else if (1011 == data.code) {
+                window.location.href= "/m/login.html?redirectUrl=/m/product-list.html";
+            }
+        }
+    });
+
+
+
+</script>
+</html>

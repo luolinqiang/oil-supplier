@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oil.supplier.dao.DictionaryDao">
+    <sql id="selectAll">
+        <![CDATA[
+        SELECT
+		    `dictionary`.`id`,
+		    `dictionary`.`group_code` as groupCode,
+		    `dictionary`.`group_name` as groupName,
+		    `dictionary`.`code`,
+		    `dictionary`.`name`,
+		    `dictionary`.`pid`,
+		    `dictionary`.`create_time` as createTime,
+		    `dictionary`.`update_time` as updateTime,
+		    `dictionary`.`state`,
+		    `dictionary`.`remark`
+		FROM `dictionary`
+        ]]>
+	</sql>
+
+    <select id="getAll" resultType="dictionary">
+        <include refid="selectAll"/>
+    </select>
+
+    <insert id="insert" parameterType="dictionary" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        <![CDATA[
+            INSERT INTO `dictionary`
+				(
+					`group_code`,
+					`group_name`,
+					`code`,
+					`name`,
+					`pid`,
+					`create_time`,
+					`update_time`,
+					`state`,
+					`remark`
+				)
+				VALUES
+				(
+					#{groupCode},
+	                #{groupName},
+	                #{code},
+	                #{name},
+	                #{pid},
+	                now(),
+	                now(),
+	                #{state},
+	                #{remark}
+				)
+                ]]>
+    </insert>
+
+    <update id="update" parameterType="dictionary">
+        UPDATE   `dictionary`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupCode != null and groupCode != ''">
+                group_code = #{groupCode},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="pid != null and pid != ''">
+                pid = #{pid},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            update_time = now(),
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </trim>
+    </update>
+
+    <select id="getById" parameterType="Long" resultType="dictionary">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="value != null">
+                and id = #{value}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getList" parameterType="dictionary" resultType="dictionary">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+            <if test="groupCode != null and groupCode != ''">
+                and group_code = #{groupCode}
+            </if>
+            <if test="groupName != null and groupName != ''">
+                and group_name = #{groupName}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="pid != null and pid != ''">
+                and pid = #{pid}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+        </trim>
+    </select>
+</mapper>

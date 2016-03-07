@@ -1,0 +1,11 @@
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    #if(${keywords})<meta name="keywords" content="${keywords}"> #end
+	#if(${description})<meta name="description" content="${description}"> #end
+    <title>#if(${title}) ${title}  #else  #end</title>
+
+</head>
+
+

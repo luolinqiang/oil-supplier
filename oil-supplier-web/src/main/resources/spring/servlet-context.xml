@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+       default-autowire="byName" default-lazy-init="false">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:config-${profiles.active}.properties</value>
+                <value>classpath:config.properties</value>
+                <value>classpath:important.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <mvc:default-servlet-handler/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.oil.supplier.*">
+        <!--<context:exclude-filter type="regex" expression="com\.oil\.supplier\.web\.controller"/>-->
+    </context:component-scan>
+    <task:annotation-driven />
+    <mvc:annotation-driven/>
+
+    <!--该 BeanPostProcessor 将自动对标注 @Autowired 的 Bean 进行注入-->
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+    <mvc:resources location="/index.html" mapping="/index.html" cache-period="864000"/><!-- 24 * 3600 * 10 -->
+
+    <!-- template view -->
+    <!--<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">-->
+        <!--<property name="resourceLoaderPath" value="/WEB-INF/views/"/>-->
+        <!--<property name="velocityProperties">-->
+            <!--<props>-->
+                <!--<prop key="input.encoding">UTF-8</prop>-->
+                <!--<prop key="output.encoding">UTF-8</prop>-->
+                <!--<prop key="contentType">text/html;charset=UTF-8</prop>-->
+                <!--&lt;!&ndash;<prop key="velocimacro.library">macro/macros.vm</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="directive.foreach.counter.name">velocityCount</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="directive.foreach.counter.initial.value">1</prop>&ndash;&gt;-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+	<!--<bean id="viewResolver"-->
+		<!--class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">-->
+		<!--<property name="layoutUrl" value="layout/layout.vm" />-->
+		<!--<property name="cache" value="true" />-->
+		<!--<property name="prefix" value="" />-->
+		<!--<property name="suffix" value=".vm" />-->
+		<!--<property name="exposeSpringMacroHelpers" value="true" />-->
+		<!--<property name="dateToolAttribute" value="dateTool" />-->
+		<!--<property name="numberToolAttribute" value="numberTool" />-->
+		<!--&lt;!&ndash; Merge urlBuilderMap to view context for convenience. You can put your -->
+			<!--tools which must be thread safe. &ndash;&gt;-->
+		<!--<property name="contentType" value="text/html;charset=UTF-8" />-->
+	<!--</bean>-->
+
+    <!--返回json配置 begin -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+                <property name="mediaTypes">
+                    <props>
+                        <prop key="json">application/json</prop>
+                        <prop key="json">image/jpeg</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <!--返回json配置 end -->
+
+    <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+    <!---->
+
+    <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 指定所上传文件的总大小不能超过1mb。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="1000000"/>
+    </bean>
+
+    <bean id="cookieUtils" class="com.jd.common.web.cookie.CookieUtils">
+        <property name="jdCookie">
+            <util:list>
+
+                <bean class="com.jd.common.web.cookie.JdCookie">
+                    <property name="name" value="${server.cookie.pin}"/>
+                    <property name="domain" value="${server.cookie.domain}"/>
+                    <property name="expiry" value="${server.session.timeout}"/>
+                    <property name="path" value="/"/>
+                    <property name="encrypt" value="true"/>
+                    <property name="key" value="${client.encrypt.cookie.key}"/>
+                    <property name="cookieCipherTools" ref="cookieCipherTools"/>
+                </bean>
+
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="cookieCipherTools" class="com.jd.common.web.cookie.CookieCipherTools">
+        <property name="charsetName" value="utf-8"/>
+    </bean>
+
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<mvc:exclude-mapping path="/favicon.ico"/>-->
+            <!--<mvc:exclude-mapping path="/m/login.html"/>-->
+            <!--<mvc:exclude-mapping path="/m/req-supply.html"/>-->
+            <!--<mvc:exclude-mapping path="/u/**"/>-->
+            <!--<mvc:exclude-mapping path="/common/getAreas"/>-->
+            <!--<mvc:exclude-mapping path="/m/images/**"/>-->
+            <!--<mvc:exclude-mapping path="/m/js/**"/>-->
+            <!--<mvc:exclude-mapping path="/m/css/**"/>-->
+            <!--<bean class="com.oil.supplier.web.interceptor.TicketRequiredInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+
+    <!--</mvc:interceptors>-->
+
+</beans>
